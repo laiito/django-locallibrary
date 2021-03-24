@@ -72,5 +72,6 @@ class Author(models.Model):
         """Returns the url to access a particular author instance"""
         return reverse('author-detail', args=[str(self.id)])
 
-    def ___str___(self):
+    def __str__(self):
+        """String for representing the Model object."""
         return f'{self.last_name}, {self.first_name}'
