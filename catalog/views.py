@@ -29,29 +29,25 @@ def index(request):
 
 class BookListView(generic.ListView):
     model = Book
-    template_name = 'book_list.html'
     paginate_by = 10
 
 
 class BookDetailView(LoginRequiredMixin, generic.DetailView):
     model = Book
-    template_name = 'book_detail.html'
 
 
 class AuthorListView(generic.ListView):
     model = Author
-    template_name = 'author_list.html'
     paginate_by = 10
 
 
 class AuthorDetailView(generic.DetailView):
     model = Author
-    template_name = 'author_detail.html'
 
 
 class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
     model = BookInstance
-    template_name = 'bookinstance_list_borrowed_user.html'
+    template_name = 'catalog/bookinstance_list_borrowed_user.html'
     paginate_by = 10
 
     def get_queryset(self):
