@@ -2,6 +2,8 @@ from django.db import models
 from django.db.models.fields.related import ManyToManyField
 from django.urls import reverse
 import uuid
+from django.contrib.auth.models import User
+from datetime import date
 
 
 class Genre(models.Model):
@@ -56,12 +58,22 @@ class BookInstance(models.Model):
     status = models.CharField(max_length=1, choices=LOAN_STATUS,
                               blank=True, default='m', help_text='Book avaliability')
 
+    borrower = models.ForeignKey(
+        User, on_delete=models.SET_NULL, null=True, blank=True)
+
     class Meta:
         ordering = ['due_back']
 
     def __str__(self):
         """String for representing the Model object"""
         return f'{self.id} ({self.book.title})'
+
+    @property
+    def is_overdue(self):
+        if self.due_back and date.today() > self.due_back:
+            return True
+        else:
+            return False
 
 
 class Author(models.Model):
